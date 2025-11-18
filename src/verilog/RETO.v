@@ -45,13 +45,13 @@ LATSTB l(
     .STB(STB_)
 );
 
-moverMotor mt(
-    .STB(STB_),
-    .CLK(CLK),
-    .INA(INA),
-    .INA2(INA2),
-    .INB(INB),
-    .INB2(INB2)
-);
+//moverMotor mt(
+//    .STB(STB_),
+//    .CLK(CLK),
+//    .INA(INA),
+//    .INA2(INA2),
+//    .INB(INB),
+//    .INB2(INB2)
+//);
 
 endmodule
