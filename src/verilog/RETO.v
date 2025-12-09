@@ -45,13 +45,19 @@ LATSTB l(
     .STB(STB_)
 );
 
-//moverMotor mt(
-//    .STB(STB_),
-//    .CLK(CLK),
-//    .INA(INA),
-//    .INA2(INA2),
-//    .INB(INB),
-//    .INB2(INB2)
-//);
+moverMotor mt(
+    .STB(STB_),
+    .CLK(CLK),
+    .INA(INA),
+    .INA2(INA2),
+    .INB(INB),
+    .INB2(INB2)
+);
+
+LCD1602_controllerP lcd(
+    .clk(CLK),
+    .reset(1'b1),
+    .ready_i(1'b1)
+);
 
 endmodule

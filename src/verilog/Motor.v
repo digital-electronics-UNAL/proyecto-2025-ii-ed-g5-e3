@@ -8,7 +8,7 @@ module Motor(
 );
 
 //registros pa contadores
-parameter STEP_FREQ_DIV = 125000-1; //los 50MHz toca bajarlos (50M/(2*125000))
+parameter STEP_FREQ_DIV = 375000-1; //los 50MHz toca bajarlos (50M/(2*125))
 reg [7:0] duty;//duty, va de 0 a 255
 reg CLKint; 
 reg [$clog2(STEP_FREQ_DIV-1):0] counter;
@@ -41,11 +41,11 @@ end
 
 always @(posedge CLK) begin
     if (counter>=STEP_FREQ_DIV) begin
-        counter=0;
-        CLKint=~CLKint;
+        counter<=0;
+        CLKint<=~CLKint;
     end
     else begin  
-        counter = counter+1;
+        counter <= counter+1;
     end
 end
 
@@ -70,9 +70,9 @@ always @(posedge CLKint) begin
             //default: PASO=4'b0000;
         endcase
     end
-    //else begin
-    //    PASO=4'b0000;
-    //end
+    else begin
+        PASO<=4'b0000;
+    end
 end
 
 //y por acá las salidas

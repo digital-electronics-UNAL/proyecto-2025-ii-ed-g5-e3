@@ -11,6 +11,9 @@ reg [$clog2(5208):0] counter;
 reg CLKinterno;
 reg activo; 
 
+reg [$clog2(384):0] lineCounter;
+reg [1:0] filterCounter;
+
 initial begin
     CLKinterno=0;
     counter='b0;
@@ -19,6 +22,8 @@ initial begin
     DI = 0;
     enviando = 0;
     activo=0;
+    lineCounter=0;
+    filterCounter=0;
 end
 
 always @(posedge CLK) begin
@@ -52,8 +57,20 @@ always @(posedge CLKinterno) begin
 
                 bitcounter = bitcounter+1;
                 if (bitcounter == 1 || bitcounter == 5) begin
-                    DI = Rx;
-                    enviando=1;
+                    if (lineCounter==384) begin
+                        DI=0;
+                        enviando=0;
+                        if (filterCounter==3)begin
+                            lineCounter=0;
+                            filterCounter=0;
+                        end else begin
+                            filterCounter=filterCounter+1;
+                        end
+                    end else begin
+                        DI = Rx;
+                        enviando=1;
+                        lineCounter=lineCounter+1;
+                    end
                 end
                 
                 if (bitcounter==8) begin 
