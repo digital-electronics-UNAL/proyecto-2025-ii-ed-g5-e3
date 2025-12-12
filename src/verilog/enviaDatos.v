@@ -46,7 +46,7 @@ always @(posedge CLK) begin
 end
 
 always @(posedge CLK200khz) begin
-	enviando2 = enviando;
+	enviando2 <= enviando;
 	//recibe los datos
     if (enviando && !enviando2) begin
         serialPara1 <= {DI, serialPara1[63:1]};
@@ -54,14 +54,14 @@ always @(posedge CLK200khz) begin
     end
     
 	if (cuentaBits==64) begin//si se llena se lo manda al otro en paralelo
-		enable=1; 
-		enableCLKimpr=1;
-		cuentaBits=0;
+		enable<=1; 
+		enableCLKimpr<=1;
+		cuentaBits<=0;
 	end
 	
 	if (enable) begin
 		serialPara2 <= serialPara1;
-		enable =0;//se pone de una en serie
+		enable <=0;//se pone de una en serie
 	end
 	else begin
 		serialPara2 <= serialPara2 >> 1;
@@ -69,8 +69,8 @@ always @(posedge CLK200khz) begin
 	//cuando se mandan los datos se hace junto al CLKimpr 
 	if (enableCLKimpr) begin
 		if (cCLKimpr>=384) begin
-			cCLKimpr=0;
-			enableCLKimpr=0;
+			cCLKimpr<=0;
+			enableCLKimpr<=0;
 		end else begin
 			cCLKimpr<=cCLKimpr+1;
 		end

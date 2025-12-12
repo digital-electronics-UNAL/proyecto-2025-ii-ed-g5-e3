@@ -20,7 +20,7 @@ reg lat_event;
 reg [5:0] cLAT;
 reg enableLAT;
 
-reg [6:0] cSTB;
+reg [12:0] cSTB;
 reg enableSTB;
 
 reg [9:0] posicion;
@@ -101,7 +101,7 @@ always @(posedge CLK) begin
 
     if (enableSTB) begin
         STB <= 1;
-        if (cSTB == 7'd50) begin
+        if (cSTB == 13'd2500) begin
             STB <= 0;
             enableSTB <= 0;
             cSTB <= 0;
